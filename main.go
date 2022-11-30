@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	// You can not execute at once.
+	// I recommand to execute not at once.
 	// test.HistoryTest()
 	// test.SyncTest()
 	fmt.Println("Hello-World!")

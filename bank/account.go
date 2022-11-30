@@ -118,7 +118,6 @@ func (a *Account) Transfer(to AccountNumber, m Money) error {
 	}
 	fromAccountMutex, toAccountMutex := SyncAccountFromNumber[a.Number].Mutex, SyncAccountFromNumber[to].Mutex
 	fromClient, toClient := ClientFromAccountNumber[a.Number], ClientFromAccountNumber[to]
-
 	fromAccountMutex.Lock()
 	switch toAccountMutex.TryLock() {
 	// Prevent from deadlock
@@ -126,6 +125,7 @@ func (a *Account) Transfer(to AccountNumber, m Money) error {
 		fromAccountMutex.Unlock()
 		return errors.New("someone is occupied")
 	case true:
+
 		if fromAccount.Balance < m {
 			err = fmt.Errorf("%s %s not enough balance", fromClient.Name.Frist, fromClient.Name.Last)
 			break

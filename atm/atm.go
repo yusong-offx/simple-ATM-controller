@@ -72,7 +72,9 @@ func (a *ATM) CashBasicDeposit() (bank.Money, bool) {
 func (a *ATM) Read(object ServiceType, pin string) error {
 	a.Mutex.Lock()
 	a.Service = object
+
 	if err := a.Service.PINCheck(pin); err != nil {
+		a.Service = nil
 		a.Mutex.Unlock()
 		return err
 	}
